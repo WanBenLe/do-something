@@ -274,13 +274,33 @@ $$T=\begin{Bmatrix}(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{i},y_{i})\end{Bmatrix};x_
 
 ​	证明:对向量组$\alpha_{1},\alpha_{2},...,\alpha_{k}$应用Schmidt正交化过程,得到一组正交向量组$\beta_{1},\beta_{2},...,\beta_{k}$,把$\alpha_{1},\alpha_{2},...,\alpha_{k}$用$\beta_{1},\beta_{2},...,\beta_{k}$表示如下:
 
-<center>$$\alpha_{1}=\beta_{1}$$</center>
+<center>$$\alpha_{1}=\beta_{1}$$	$(B-1)$</center>
 
-<center>$$\alpha_{2}=b_{12}\beta_{1}+\beta_{2}$$</center>
+<center>$$\alpha_{2}=b_{12}\beta_{1}+\beta_{2}$$	$(B-1)$</center>
 
-<center>$$...$$</center>
+<center>$$...$$	$(B-1)$</center>
 
+<center>$$\alpha_{k}=b_{1k}\beta_{1}+b_{2k}\beta_{2}+...+b_{k-1k}\beta_{k-1}+\beta_{k}$$	$(B-1)$</center>
 
+<center>$$(\alpha_{1},\alpha_{2},...,\alpha_{k})=(\beta_{1},\beta_{2},...,\beta_{k})\begin{vmatrix} 1 & b_{12}  & ... & b_{1k}\\ 0 & 1 & ... & b_{2k}\\...  & ...  & ... & ... \\ 0&0  & ... & 1 \end{vmatrix}$$</center>
+
+$$G=(\alpha_{1},\alpha_{2},...,\alpha_{k})=\begin{vmatrix} (\alpha{1},\alpha{1}) &(\alpha{1},\alpha{2})  & ... & (\alpha{1},\alpha{k})\\ (\alpha{2},\alpha{1}) &(\alpha{2},\alpha{2})  & ... & (\alpha{2},\alpha{k}) \\...  & ...  & ... & ... \\ (\alpha{k},\alpha{1}) &(\alpha{k},\alpha{2})  & ... & (\alpha{k},\alpha{k}) \end{vmatrix}=\left |\begin{pmatrix}\alpha_{1}^{T}\\\alpha_{2}^{T}\\...\\\alpha_{k}^{T}\end{pmatrix}\begin{pmatrix} \alpha_{1}&\alpha_{2}  &...  & \alpha_{k} \end{pmatrix}\right |$$
+
+$$=\left |(\beta_{1},\beta_{2},...,\beta_{k})\begin{vmatrix} 1 & b_{12}  & ... & b_{1k}\\ 0 & 1 & ... & b_{2k}\\...  & ...  & ... & ... \\ 0&0  & ... & 1 \end{vmatrix}\right |^{T} *(\beta_{1},\beta_{2},...,\beta_{k})\begin{vmatrix} 1 & b_{12}  & ... & b_{1k}\\ 0 & 1 & ... & b_{2k}\\...  & ...  & ... & ... \\ 0&0  & ... & 1 \end{vmatrix}$$
+
+$$=\left |\begin{vmatrix} 1 & b_{12}  & ... & b_{1k}\\ 0 & 1 & ... & b_{2k}\\...  & ...  & ... & ... \\ 0&0  & ... & 1 \end{vmatrix}^{T}\right |*\left|\begin{pmatrix}\beta_{1}^{T}\\\beta_{2}^{T}\\...\\\beta_{k}^{T}\end{pmatrix}\begin{pmatrix} \beta_{1}&\beta_{2}  &...  & \beta_{k} \end{pmatrix}\right|*\left|\begin{vmatrix} 1 & b_{12}  & ... & b_{1k}\\ 0 & 1 & ... & b_{2k}\\...  & ...  & ... & ... \\ 0&0  & ... & 1 \end{vmatrix}\right|$$
+
+$$=\left|\begin{pmatrix}\beta_{1}^{T}\\\beta_{2}^{T}\\...\\\beta_{k}^{T}\end{pmatrix}\begin{pmatrix} \beta_{1}&\beta_{2}  &...  & \beta_{k} \end{pmatrix}\right|=G(\beta_{1},\beta_{2},...,\beta_{k})​$$
+
+​	由$\beta_{1},\beta_{2},...,\beta_{k}$的正交性可得$G(\alpha_{1},\alpha_{2},...,\alpha_{k})=G$
+
+<center>$$(\beta_{1},\beta_{2},...,\beta_{k})=\begin{vmatrix}(\beta_{1},\beta_{1})&  &  & \\ & (\beta_{2},\beta_{2}) &  & \\ &  & ... & \\ &  &  & (\beta_{k},\beta_{k})\end{vmatrix}=\prod_{i=1}^{k}\left |\beta_{i}  \right |^{2}\geq 0$$</center>
+
+​	因为$\Delta (\alpha{1},\alpha{2},...,\alpha_{k})$的$k$阶主子阵也是Gram矩阵,所以行列式的值大于等于零,因此$\Delta$也是半正定矩阵.
+
+​	$\forall k,G(\alpha_{1},\alpha_{2},...,\alpha_{k})\geq 0$,
+
+​	
 
 ## 参考文献
 
