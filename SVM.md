@@ -266,9 +266,21 @@ $$T=\begin{Bmatrix}(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{i},y_{i})\end{Bmatrix};x_
 
 定义:$n$维欧式空间任意$k(k\leq n)$个向量$\alpha_{1},\alpha_{2},...,\alpha_{k}$的内积组成的矩阵
 
-$\Delta (\alpha{1},\alpha{2},...,\alpha_{k})=\begin{vmatrix} (\alpha{1},\alpha{1}) &(\alpha{1},\alpha{2})  & ... & (\alpha{1},\alpha{k})\\ (\alpha{2},\alpha{1}) &(\alpha{2},\alpha{2})  & ... & (\alpha{2},\alpha{k}) \\...  & ...  & ... & ... \\ (\alpha{k},\alpha{1}) &(\alpha{k},\alpha{2})  & ... & (\alpha{k},\alpha{k}) \end{vmatrix}$
+<center>$\Delta (\alpha{1},\alpha{2},...,\alpha_{k})=\begin{vmatrix} (\alpha{1},\alpha{1}) &(\alpha{1},\alpha{2})  & ... & (\alpha{1},\alpha{k})\\ (\alpha{2},\alpha{1}) &(\alpha{2},\alpha{2})  & ... & (\alpha{2},\alpha{k}) \\...  & ...  & ... & ... \\ (\alpha{k},\alpha{1}) &(\alpha{k},\alpha{2})  & ... & (\alpha{k},\alpha{k}) \end{vmatrix}$</center>
 
-称为$k$个向量$\alpha_{1},\alpha_{2},...,\alpha_{k}$的Gram矩阵,行列式$G(\alpha_{1},\alpha_{2},...,\alpha_{k})=\Delta (\alpha{1},\alpha{2},...,\alpha_{k})$成为Gram行列式
+​	称为$k$个向量$\alpha_{1},\alpha_{2},...,\alpha_{k}$的Gram矩阵,行列式$G(\alpha_{1},\alpha_{2},...,\alpha_{k})=\Delta (\alpha{1},\alpha{2},...,\alpha_{k})$称为Gram行列式.
+
+​	定理$B-1$:欧式空间中向量$\alpha_{1},\alpha_{2},...,\alpha_{k}$的Gram矩阵$\Delta (\alpha{1},\alpha{2},...,\alpha_{k})$必为半正定矩阵,$\Delta (\alpha{1},\alpha{2},...,\alpha_{k})$为正定矩阵的充要条件是$\alpha{1},\alpha{2},...,\alpha_{k}$线性无关.
+
+​	证明:对向量组$\alpha_{1},\alpha_{2},...,\alpha_{k}$应用Schmidt正交化过程,得到一组正交向量组$\beta_{1},\beta_{2},...,\beta_{k}$,把$\alpha_{1},\alpha_{2},...,\alpha_{k}$用$\beta_{1},\beta_{2},...,\beta_{k}$表示如下:
+
+<center>$$\alpha_{1}=\beta_{1}$$</center>
+
+<center>$$\alpha_{2}=b_{12}\beta_{1}+\beta_{2}$$</center>
+
+<center>$$...$$</center>
+
+
 
 ## 参考文献
 
