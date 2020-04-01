@@ -1,2 +1,0 @@
-FST+GAN
-SVM+GAN
