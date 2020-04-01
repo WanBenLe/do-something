@@ -1,0 +1,11 @@
+We import some packages like pandas and numpy and read data,the meaning for the data is in the end.First we use the mean to instead missing value,make box diagram and use 3-sigma rule to instead outlier.The second we make a scatter plot for show person number of self-inflicted.Then we use a1 heatmap to show the correlation of data.The last,we ue Decision Tree to predict, the R-Square is 0.85.
+
+均值替换缺失值数据,作出箱型图,3-sigma(均值+-3倍标准差)原则替换离群值,然后作出相关系数的热力图(自杀人数跟type1.type2相关性更高一些).最后用决策树训练并预测,R方85%.
+
+
+type1:Persons Inadequately described Not stated Total
+type2:Persons Total Advanced Diploma and Diploma Level
+type3:Persons Total Bachelor Degree Level
+type4:Persons Total Certificate Level
+type5:Persons Total Postgraduate Degree Level
+data1:Premature deaths from suicide and self-inflicted injuries, at ages 0 to 74 years count. 

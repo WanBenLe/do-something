@@ -1,0 +1,53 @@
+library(mco)
+library(nsga2R)
+#rep()是新建向量
+x<-function (x) 
+{
+    y1 <- (-1.394*x[1]-1.056*x[2])
+    y2<-(x[1]+x[2])
+    y3 <- ((x[1]^2*0.011340425+x[2]^2*0.000191660*0.000891355-0.000133198*x[1]*x[2]+0.005873972*x[1]+0.000230852*x[2])/(x[1]+x[2]))
+    low=rep(0,2)
+    low[3]=1000000-x[1]-x[2]
+    up=rep(1000000,2)
+    up[3]=1000000-x[1]-x[2]
+    return(c(y1,y2,y3))
+}
+results <- nsga2R(fn=x,varNo=2,objDim=3,lowerBounds=low,upperBounds=up,popSize=50,tourSize=3,generations=50, cprob=0.9, XoverDistIdx=20, mprob=0.1,MuDistIdx=4)
+plot(results$objectives)
+results$objectives[50,]
+results$parameters[50,]
+
+
+
+
+
+参数
+fn	
+最小化的目标函数
+varNo	
+决策变量数
+objDim	
+目标函数数
+lowerBounds	
+每个决策变量的下界
+upperBounds	
+每个决策变量的上界
+popSize	
+总体规模
+tourSize	
+竞争规模
+generations	
+繁衍代数
+cprob	
+交叉概率
+XoverDistIdx	
+交叉参数,它可以是任何非负实数
+mprob	
+变异概率
+MuDistIdx	
+变异参数,它可以是任意非负实数
+
+
+
+
+

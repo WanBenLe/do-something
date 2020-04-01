@@ -1,0 +1,91 @@
+
+################PSO算法实现################
+##初始化PSO算法参数
+#收敛因子k（类似于惯性系数的作用）
+#学习因子初始化k*phi_1,k*phi_2,phi<-phi_1+phi_2
+#粒子群位置初始化w,以及wmin,wmax
+#粒子群速度初始化v,以及vmin,vmax
+k<-0.729
+phi_1<-2.05
+phi_2<-2.05
+#以上参数为参照前人的经验
+#初始化函数
+inifunc<-function(dim,wmin,wmax,vmin,vmax,n){
+G<-rep(NA,2*dim+1)
+A<-matrix(runif(n*dim,wmin,wmax),nrow=n,ncol=dim)
+B<-matrix(runif(n*dim,vmin,vmax),nrow=n,ncol=dim)
+C<-apply(A,1,func)
+G<-cbind(A,B,C)[which(C==min(C)),]
+return(rbind(cbind(A,B,C),G))
+}
+#定义函数function();
+#重复rep(x,times)
+#定义矩阵matrix(x,nrow=,ncol=)
+#runif(n, min=, max=)均匀分布
+#返回下标(INDEX)：apply(X,INDEX,FUN=)
+#cbind()以列的形式组合;真值判断which(x == a)
+#rbind()以行的形式组合;输出结果return()      
+
+##所有粒子历史最优搜索(Gbest)
+Gbestfunc<-function(x,dim,n){
+C<-x[-(n+1),2*dim+1]
+return(rbind(x[-(n+1),],x[which(C==min(C)),]))
+}
+
+##PSO 核心 function
+PSOAfunc<-function(x,dim,wmin,wmax,vmin,vmax,n){
+A<-x[-(n+1),1:dim]
+B<-x[-(n+1),(dim+1):(2*dim)]
+C<-x[-(n+1),2*dim+1]
+for(i in 1:n){
+neww<-A[i,]+B[i,]
+for(j in 1:dim){
+if(neww[j]>wmax || neww[j]<wmin){
+neww[j]<-runif(1,wmin,wmax)}
+}
+if(func(neww)<func(A[i,])){
+A[i,]<-neww
+B[i,]<-k*(B[i,]+phi_1*runif(1,0,1)*B[i,]+phi_2*runif(1,0,1)*(x[n+1,1:10]-A[i,]))
+for(k in 1:dim){
+if(B[i,k]>vmax || B[i,k]<vmin){
+B[i,k]=runif(1,vmin,vmax)}
+}
+C[i]<-func(neww)
+} else{
+B[i,]<-k*(B[i,]+phi_2*runif(1,0,1)*(x[n+1,1:10]-A[i,]))
+for(k in 1:dim){
+if(B[i,k]>vmax || B[i,k]<vmin){
+B[i,k]=runif(1,vmin,vmax)}
+}
+}
+}
+G<-rep(NA,2*dim+1)
+H<-Gbestfunc(rbind(cbind(A,B,C),G),dim,n)
+return(H)
+}
+
+##封装迭代过程以及迭代停止条件
+interfunc<-function(intertimes,dim,wmin,wmax,vmin,vmax,n){
+x<-inifunc(dim,wmin,wmax,vmin,vmax,n)
+A<-matrix(0,nrow=2,ncol=intertimes)
+for(j in 1:intertimes){
+print(j)
+A[1,j]<-j
+x<-PSOAfunc(x,dim,wmin,wmax,vmin,vmax,n)
+G<-x[(n+1),1:dim]
+A[2,j]<-func(G)
+if(func(G)<0.05) break
+}
+print(G)
+plot(A[1,],A[2,],type="l")
+return(func(G))
+}
+
+##例子
+###PSO所要优化的目标函数，函数维度为length(x)
+func<-function(x){
+return(sum(x^3))
+}
+interfunc(20000,20,0,10,-0.05,0.05,10)
+#return(目标函数)
+#interfunc(模拟次数;矩阵列数,粒子群位置下限,粒子群位置上限,粒子群速度下限,粒子群速度上限,矩阵行数)

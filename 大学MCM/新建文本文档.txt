@@ -1,0 +1,32 @@
+Acf(x, lag.max = NULL,
+    type = c("correlation", "covariance", "partial"),
+    plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
+×¢£ºACFÍ¼
+Pacf(x, lag.max=NULL, plot=TRUE, na.action=na.contiguous, ...)
+×¢£ºPACFÍ¼
+pairs(formula, data = NULL, ..., subset,
+      na.action = stats::na.pass)
+×¢£ºÉ¢µãÍ¼
+×¢£ºformula£º~AAA+BBB+CCC
+scatterplotMatrix(formula, data=NULL, subset, labels, ...)
+×¢£ºÉ¢µã¾ØÕóÍ¼
+×¢£ºformula£º~AAA+BBB+CCC
+scatter3d(formula, data, subset, radius, xlab, ylab, zlab, labels, ...)
+×¢£ºÈýÎ¬É¢µãÍ¼
+
+
+data x;
+infile 'D:\Documents\X.CSV' DSD FIRSTOBS=2;
+INPUT VAR0 VAR1 VAR2 VAR3 VAR4 VAR5 VAR6 VAR7;
+RUN;
+PROC PRINT DATA=X;
+RUN;
+PROC GPLOT DATA=X;
+PLOT VAR6*VAR0;
+RUN;
+PROC CORR DATA=X;
+VAR VAR1 VAR2 VAR3 VAR4 VAR5 VAR6 VAR7;
+RUN;
+PROC FACTOR DATA=X ALL;
+VAR VAR3 VAR5 VAR6;
+RUN;

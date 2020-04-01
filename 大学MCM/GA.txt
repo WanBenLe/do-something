@@ -1,0 +1,18 @@
+library(foreach)
+library(iterators)
+library(GA)
+library(mcga)
+library(genalg)
+ADJ<-function(x)
+{
+if(x>=-100 && x<=100)
+{return((x*x))}
+else
+{return(exp(100))}
+}
+
+t<-function(y)
+{y$population[1,]}
+z<-rbga(stringMin=c(-100),stringMax=c(100),popSize=100,iters=100,mutationChance=0.01,monitorFunc=t,evalFunc=ADJ,verbose=TRUE)
+str(z)
+plot(z)

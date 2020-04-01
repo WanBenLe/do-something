@@ -1,0 +1,64 @@
+#形如plot.hist之类的用于画图,可以复制到这些部分面前停下就不会被覆盖了
+#多次运行结果有不同可以多试选个喜欢的
+#这三条注释记得删掉
+library(fBasics)
+library(fitdistrplus)
+data <- read.csv("C:\\Users\\Administrator\\Desktop\\goods\\sss.csv", header = TRUE)
+d2<-(data[,'X'])
+
+plot(density(d2),col=1,main='Estimated Density',ylim=c(0,0.03),lty=1)
+
+want1<-d2
+
+
+#第一个均值的MH
+
+hist(want1)
+descdist(want1) 
+fitdist(want1, "exp",method = c('mle'))
+p<-fitdist(want1, "exp",method = c('mle'))
+pic0<-rexp(10000,p$estimate[1])
+hist(pic0)
+
+p1<-p$estimate[1]
+
+
+p=function(x){
+(1-exp(-p1*x))
+ }
+
+
+ MH=function(x0,n){
+ x=NULL
+ y=NULL
+ x[1] = x0
+ y[1] = 0.5
+ for (i in 1:n){
+   x_can= x[i]+rnorm(1,0,1.45)
+   d= p(x_can)/p(x[i])
+   alpha= min(1,d)
+   u=runif(1,0,1)
+     if (u<alpha){
+     x[i+1]=x_can
+     y[i+1]=u
+	
+	}
+     else{
+       x[i+1]=x[i]
+       y[i+1]=y[i]
+      }
+ }
+ cbind(x,y)
+ }
+
+for (i in 1:10000){
+z=MH(10,1000)
+ntrain <- round(38) 
+tindex <- sample(1000,ntrain) 
+if (i==1){xtrain <- z[tindex,]}
+else{xtrain=cbind(xtrain,z[tindex,])}
+}
+
+write.table(xtrain,"C:\\Users\\Administrator\\Desktop\\goods\\sample.csv",sep=",")
+
+write.table(xtrain,"C:\\Users\\Administrator\\Desktop\\goods\\sampleT.csv",sep=",")

@@ -1,0 +1,16 @@
+stock<-read.csv("STOCK.csv",dec=",")
+library(graphics)
+library(splines)
+result<-matrix(,nrow=773,ncol=84)
+x. <-stock[,1]
+for (i in 1:84){
+f <-stock[,i+1]
+s0 <- splinefun(x., f) 
+plot(x., f) 
+curve(s0(x), add = TRUE, col = 2, n =733) -> m0 
+legend("right", 
+       paste0("splinefun( \"", c("fmm"), "\" )"), 
+       col = 2:4, lty = 1, bty = "n") 
+##Êä³ö²åÖµ
+result[,i]<- m0$x
+}

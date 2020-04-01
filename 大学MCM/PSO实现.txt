@@ -1,0 +1,50 @@
+percentage_auto=0.095
+options(max.print=1000000)
+library(pso)
+strdata<-as.matrix(read.csv("x.csv",dec=","))
+strdata=matrix(as.numeric(strdata),nrow=nrow(strdata))
+#225-448行是下降的道路
+#strdata[2,1]第二行第一列
+road_S<-matrix(,nrow=448,ncol=2)
+road_S=matrix(as.numeric(road_S),nrow=nrow(road_S))
+single_lane_width = 3.6576
+avg_car_width = 3
+avg_car_length = 5
+for (i in 1:448){
+road_S[i,1]=(strdata[i,3]-strdata[i,2])*1609.344
+road_S[i,2]=road_S[i,1]*strdata[i,5]*single_lane_width
+}
+#road_S[i,1]路的长度,road_S[i,2]路的面积,长度单位用米(1英里=1609.344米)
+xm=0.93
+x0=0.12
+r=7.1
+CS<-as.numeric(xm / (1 + (xm/x0-1) * exp(-r * percentage_auto)))
+car_s<-as.numeric(((7.8)/((1+CS)^2)+avg_car_length )*avg_car_width)
+v=1609.334
+#初始速度为极速60英里/小时=1609.334m/min,用分钟做单位时间
+N<-matrix(,nrow=448,ncol=4)
+N=matrix(as.numeric(N),nrow=nrow(N))
+rou<-matrix(,nrow=448,ncol=4)
+rou=matrix(as.numeric(rou),nrow=nrow(rou))
+#第1列=极速不堵塞,极速堵塞,优化速度不堵塞，优化速度堵塞
+indexm<-matrix(,nrow=448,ncol=1)
+indexm=matrix(as.numeric(indexm),nrow=nrow(indexm))
+Index=0
+for (i in 1:448){
+N[i,1]<-(road_S[i,1]/v)*(strdata[i,4]*0.92)/(23*60)
+N[i,2]<-(road_S[i,1]/v)*(strdata[i,4]*0.08)/(1*60)
+
+vnew<-psoptim(rep(NA,1),function(x) ((road_S[i,1]/v)*(strdata[i,4]*0.92)/(23*60)),lower=c(10),upper=c(1609.334),control=list
+(w=0.3,c.p=2.67,c.g=3.08,p=0.95,maxit=60))
+
+
+N[i,3]<-(road_S[i,1]/vnew$par)*(strdata[i,4]*0.92)/(23*60)
+vnew1<-psoptim(rep(NA,1),function(x) ((road_S[i,1]/v)*(strdata[i,4]*0.08)/(1*60)),lower=c(10),upper=c(1609.334),control=list
+(w=0.3,c.p=2.67,c.g=3.08,p=0.95,maxit=60))
+N[i,4]<-(road_S[i,1]/vnew1$par)*(strdata[i,4]*0.08)/(1*60)
+rou[i,1]<-(N[i,1]*car_s)/road_S[i,2]
+rou[i,2]<-(N[i,2]*car_s)/road_S[i,2]
+rou[i,3]<-(N[i,3]*car_s)/road_S[i,2]
+rou[i,4]<-(N[i,4]*car_s)/road_S[i,2]
+indexm[i,1]=(0.41928*rou[i,1])+(0.41928*rou[i,2])+(0.23441*rou[i,3])+(0.17629*rou[i,4])
+Index=indexm[i,1]+Index

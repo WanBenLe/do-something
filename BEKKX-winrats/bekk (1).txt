@@ -1,0 +1,7 @@
+OPEN DATA "D:\迅雷下载\上交所回函\ana.csv"
+DATA(FORMAT=PRN,ORG=COLUMNS) 1 466 Code Date R3 T3 R5 T5 R10 R10
+garch(p=1,q=1,mv=bek,pmethod=bhhh,piters=10,hmatrices=hh,rvectors=rd,VARIANCES=T5) /R3 R5 R10
+test(title="Wald Test",zeros,form=chisquared)
+#11 12 15 16
+
+说明：以上内容分为两部分，第一部分为BEKK模型结果，第二部分为溢出效应是否显著的Wald检验。Winrats软件打开后，先在Data中导入数据，接下来就复制第一部分语句进行运算，记住将语句中变量“Rs Rf”替换为你想要运行的变量即可。第二部分Wald检验中的数据表示行数，即第一部分输出结果中A（1,2），B（1,2）或者A（2,1），B（2,1）所在行数，替换即可。
