@@ -169,7 +169,6 @@ board = [["5", "3", ".", ".", "7", ".", ".", ".", "."]
 print(isValidSudoku(board))
 
 
-
 # 旋转图像
 def rotate(matrix) -> None:
     # 转列
@@ -196,7 +195,6 @@ s = ["h", "e", "l", "l", "o"]
 reverseString(s)
 
 
-
 # 整数反转
 def reverse(x):
     fu = 0
@@ -221,7 +219,7 @@ x = -123
 print(reverse(x))
 
 
-#字符串中的第一个唯一字符
+# 字符串中的第一个唯一字符
 def firstUniqChar(s):
     d = {}
     for i in range(len(s)):
@@ -234,11 +232,12 @@ def firstUniqChar(s):
             return i
     return -1
 
+
 s = "loveleetcode"
 print(firstUniqChar(s))
 
 
-#有效的字母异位词
+# 有效的字母异位词
 def isAnagram(s, t):
     d = {}
     e = {}
@@ -264,7 +263,7 @@ print(isAnagram(s, t))
 # 验证回文串
 def isPalindrome(s):
     s = s.lower()
-    #是字母和是数字的
+    # 是字母和是数字的
     s = ''.join([x for x in s if x.isalpha() or x.isdigit()])
     x = len(s) // 2
     for i in range(x):
@@ -275,6 +274,131 @@ def isPalindrome(s):
 
 s = "A man, a plan, a canal: Panama"
 print(isPalindrome(s))
+
+
+# 字符串转换整数 (atoi)
+def myAtoi(s):
+    indx = 0
+    result = ''
+    k = 0
+    while indx < len(s):
+        if s[indx] == ' ' and k == 0:
+            indx += 1
+            continue
+        elif (s[indx] == '+' or s[indx] == '-') and k == 0:
+            result += s[indx]
+            k = 1
+        elif s[indx].isdigit():
+            result += s[indx]
+            k = 1
+        else:
+            break
+        indx += 1
+    if result == '' or result == '+' or result == '-':
+        return 0
+    result = int(result)
+    if result > (2 ** 31 - 1):
+        return 2 ** 31 - 1
+    elif result < (-2 ** 31):
+        return -2 ** 31
+    return result
+
+
+print(myAtoi("00000-42a1234"))
+
+
+# 实现 strStr
+def get_next(needle):
+    # 生成list
+    next = [0] * len(needle)
+    k = -1
+    next[0] = k
+    for i in range(1, len(needle)):
+        # 第一个-1,后面有匹配的0到每个匹配,不匹配继续就-1
+        while k > -1 and needle[i] != needle[k + 1]:
+            # 不匹配就回退
+            k = next[k]
+        if needle[i] == needle[k + 1]:
+            # 匹配+1
+            k += 1
+        next[i] = k
+    return next
+
+
+# KMP
+def strStr(haystack, needle):
+    a = len(needle)
+    b = len(haystack)
+    if a == 0:
+        return 0
+    next = get_next(needle)
+    p = -1
+    for j in range(b):
+        # 没有匹配的就会退到上一个有匹配的
+        while p >= 0 and needle[p + 1] != haystack[j]:
+            p = next[p]
+        if needle[p + 1] == haystack[j]:
+            p += 1
+        if p == a - 1:
+            return j - a + 1
+    return -1
+
+
+haystack = "aabaabaaf"
+needle = "aabaaf"
+
+print(strStr(haystack, needle))
+
+
+# 外观数列
+def countAndSay(n):
+    if n == 1:
+        return '1'
+    # 递归
+    result1 = countAndSay(n - 1)
+    n = str(result1)
+    temp = [0, 0]
+    result = ''
+    for i in range(len(n)):
+        if temp[1] == 0:
+            temp[1] = 1
+            temp[0] = n[i]
+        elif temp[0] == n[i]:
+            temp[1] += 1
+        else:
+            result += str(temp[1])
+            result += temp[0]
+            temp = [n[i], 1]
+    result += str(temp[1])
+    result += temp[0]
+    return result
+
+
+n = 5
+print(countAndSay(n))
+
+
+# 最长公共前缀
+def longestCommonPrefix(strs):
+    lenx = 0
+    for i in range(len(strs)):
+        if len(strs[i]) < len(strs[lenx]):
+            lenx = i
+    result = strs[lenx]
+    for i in range(len(strs)):
+        cut = 0
+        while cut < len(result):
+            if strs[i][cut] == result[cut]:
+                cut += 1
+            else:
+                result = result[0:cut]
+                break
+    return result
+
+
+strs = ["flower", "flow", "flight"]
+print(longestCommonPrefix(strs))
+
 '''
 
 print(1)
